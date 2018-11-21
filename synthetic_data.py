@@ -80,6 +80,7 @@ def add_annotations(annotation_dict):
 
 
 def create_annotation():
+    total_processed_images = 0
     list_files = os.listdir('Annotations')
     add_annotations = {}
     for file in list_files:
@@ -90,7 +91,10 @@ def create_annotation():
         objs = tree.findall('object')
         num_objs = len(objs)
         image_file = os.path.join('JPEGImages', file.split('.')[0]+'.jpg')
-        if num_objs == 2 and os.path.exists(image_file):
+        is_copy = file.split('_')[0] == 'copy'
+        if num_objs == 2 and os.path.exists(image_file) and not is_copy:
+            total_processed_images += 1
+            print('Currently processing: {}, Total images processed: {}'.format(file, total_processed_images))
             for obj in objs:
                 type = obj.find('name').text
                 bndbox = obj.find('bndbox')
