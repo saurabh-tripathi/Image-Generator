@@ -137,14 +137,15 @@ def create_annotation():
                 with open(os.path.join('ImageSets', 'Main', 't_odometer_train.txt'), 'a+') as odo_file:
                     odo_file.writelines('\n' + new_file_id + ' 1')
             # delete dummy file
-
+            if os.path.exists(dummy_file):
+                os.remove(dummy_file)
 
         else:
           pass
 
     for key in add_annotations.keys():
-        root = ET.fromstring(add_annotations[key])
-        root.write(os.path.join('Annotations', key + '.xml'))
+        with open(key+'.xml', 'w+') as file:
+            file.write(add_annotations[key])
 
 
 def simulate_odo(filename, odo_box, t_odo_box):
