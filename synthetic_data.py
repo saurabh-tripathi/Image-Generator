@@ -144,7 +144,7 @@ def create_annotation():
           pass
 
     for key in add_annotations.keys():
-        with open(key+'.xml', 'w+') as file:
+        with open(os.path.join('Annotations', key+'.xml'), 'w+') as file:
             file.write(add_annotations[key])
 
 
